@@ -49050,8 +49050,8 @@ window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
  */
 
 try {
-  window.Popper = __webpack_require__(/*! popper.js */ "./node_modules/popper.js/dist/esm/popper.js").default; //  window.$ = window.jQuery = require('jquery');
-
+  // window.Popper = require('popper.js').default;
+  //  window.$ = window.jQuery = require('jquery');
   __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.js");
 } catch (e) {}
 /**
