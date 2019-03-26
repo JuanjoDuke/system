@@ -14,8 +14,7 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        $categorias =Categoria::all();
-        return $categorias;
+        return Categoria::all();;
     }
 
    
@@ -28,9 +27,8 @@ class CategoriaController extends Controller
     public function store(Request $request)
     {
        $categoria=new Categoria();
-       $categoria->nombre = $request->nombre;
-       $categoria->descripcion = $request->descripcion;
-       $categoria->condicion='1';
+       $categoria->fill($request->all());
+       //$categoria->condicion='1';
        $categoria->save();
     }
 
@@ -45,13 +43,17 @@ class CategoriaController extends Controller
     public function update(Request $request)
     {
        $categoria=Categoria::findOrFail($request->id);
-       $categoria->nombre = $request->nombre;
+       $categoria->fill($request->all());
+       $categoria->condicion='1';
+       $categoria->save();
+      /* $categoria->nombre = $request->nombre;
        $categoria->descripcion = $request->descripcion;
        $categoria->condicion='1';
        $categoria->save();
+       */
 
     }
-    public function desactivar(Request $request)
+ /*   public function desactivar(Request $request)
     {
         $categoria=Categoria::findOrFail($request->id);
         $categoria->condicion='0';
@@ -61,6 +63,14 @@ class CategoriaController extends Controller
     {
         $categoria=Categoria::findOrFail($request->id);
         $categoria->condicion='1';
+        $categoria->save();
+    }
+
+    */
+    public function cambiarCondicion(Request $request)
+    {
+        $categoria=Categoria::findOrFail($request->id);
+        $categoria->condicion = !$categoria->condicion;
         $categoria->save();
     }
   
