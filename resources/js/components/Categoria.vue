@@ -163,7 +163,7 @@
     export default {
         data() {
             return {
-                categoria_id: 0,
+                categoria_id: 0 ,
                 nombre:'',
                 descripcion:'',
                 arrayCategoria:[],
