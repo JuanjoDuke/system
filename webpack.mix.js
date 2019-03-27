@@ -21,6 +21,7 @@ mix.styles([
    'resources/template/js/bootstrap.min.js',
    'resources/template/js/Chart.min.js',
    'resources/template/js/pace.min.js',
-   'resources/template/js/template.js'
+   'resources/template/js/template.js',
+   'resources/template/js/sweetalert2.all.min.js'
 ], 'public/js/templatepublic.js')
 .js(['resources/js/app.js'],'public/js/app.js');
