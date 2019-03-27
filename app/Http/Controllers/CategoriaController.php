@@ -69,6 +69,7 @@ class CategoriaController extends Controller
     */
     public function cambiarCondicion(Request $request)
     {
+        
         $categoria=Categoria::findOrFail($request->id);
         $categoria->condicion = !$categoria->condicion;
         $categoria->save();
