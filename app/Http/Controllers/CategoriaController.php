@@ -12,8 +12,9 @@ class CategoriaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if(!$request->ajax())return redirect('/');
         return Categoria::all();;
     }
 
@@ -26,6 +27,7 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
+        if(!$request->ajax())return redirect('/');
        $categoria=new Categoria();
        $categoria->fill($request->all());
        //$categoria->condicion='1';
@@ -42,6 +44,7 @@ class CategoriaController extends Controller
      */
     public function update(Request $request)
     {
+        if(!$request->ajax())return redirect('/');
        $categoria=Categoria::findOrFail($request->id);
        $categoria->fill($request->all());
        $categoria->condicion='1';
@@ -69,6 +72,7 @@ class CategoriaController extends Controller
     */
     public function cambiarCondicion(Request $request)
     {
+        if(!$request->ajax())return redirect('/');
         $categoria=Categoria::findOrFail($request->id);
         $categoria->condicion = !$categoria->condicion;
         $categoria->save();
