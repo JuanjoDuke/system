@@ -18,8 +18,15 @@ class CategoriaController extends Controller
         //return DB::table('categorias')->paginate(2); //si se borra no es necesario use Illuminate\Support\Facades\DB;
         //return Categoria::paginate(2);
         if (!$request->ajax()) return redirect('/');
-        $categorias = Categoria::paginate(2);
- 
+        
+        $buscar = $request->buscar;
+        $criterio = $request->criterio;
+        if ($buscar==''){
+            $categorias = Categoria::orderBy('id', 'desc')->paginate(2);
+        }
+        else{
+            $categorias = Categoria::where($criterio, 'like', '%'. $buscar . '%')->orderBy('id', 'desc')->paginate(3);
+        }
         return [
             'pagination' => [
                 'total'        => $categorias->total(),
