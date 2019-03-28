@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+//use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Categoria;
 
@@ -14,8 +14,21 @@ class CategoriaController extends Controller
      */
     public function index(Request $request)
     {
-        if(!$request->ajax())return redirect('/');
-        return Categoria::all();;
+        //if(!$request->ajax())return redirect('/');
+        //return DB::table('categorias')->paginate(2); //si se borra no es necesario use Illuminate\Support\Facades\DB;
+        //return Categoria::paginate(2);
+        $categoria=Categoria::paginate(2);
+        return[
+            'pagination'=>[
+                'total'     =>$categoria->total(),
+                'current_page'     =>$categoria->currentPage(),
+                'per_page'     =>$categoria->perPage(),
+                'last_Page'     =>$categoria->lastPage(),
+                'from'     =>$categoria->firstItem(),
+                'to'     =>$categoria->lastItem(),
+            ],
+            'categorias' => $categoria
+        ];
     }
 
    
