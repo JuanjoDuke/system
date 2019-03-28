@@ -67,25 +67,16 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <nav>
+                         <nav>
                             <ul class="pagination">
-                                <li class="page-item">
-                                    <a class="page-link" href="#">Ant</a>
+                                <li class="page-item" v-if="pagination.current_page > 1">
+                                    <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page - 1)">Ant</a>
                                 </li>
-                                <li class="page-item active">
-                                    <a class="page-link" href="#">1</a>
+                                <li class="page-item" v-for="page in pagesNumber" :key="page" :class="[page == isActived ? 'active' : '']">
+                                    <a class="page-link" href="#" @click.prevent="cambiarPagina(page)" v-text="page"></a>
                                 </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">2</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">3</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">4</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">Sig</a>
+                                <li class="page-item" v-if="pagination.current_page < pagination.last_page">
+                                    <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page + 1)">Sig</a>
                                 </li>
                             </ul>
                         </nav>
@@ -169,9 +160,10 @@
             }
         },
         components:{
-              isActived: function(){
+          isActived: function(){
                 return this.pagination.current_page;
             },
+            //Calcula los elementos de la paginación
             pagesNumber: function() {
                 if(!this.pagination.to) {
                     return [];
@@ -196,14 +188,22 @@
             }
         },
         methods: {
-            listarCategoria(){
+            listarCategoria(page){
                 let me=this;
-                axios.get('/categoria').then(function (response) {
-                    me.arrayCategoria=response.data;
+                var url='/categoria?page=' + page;
+                axios.get(url).then(function (response) {
+                    var respuesta=response.data;
+                    me.arrayCategoria=respuesta.categorias.data;
+                     me.pagination=respuesta.pagination;
                 })
                 .catch(function (error) {
                 console.log(error);
                })
+            },
+            cambiarPagina(page){
+                let me=this;
+                me.pagination.current_page=page;
+                me.listarCategoria(page);
             },
             registrarCategoria(){
                 if(this.validarCategoria()){
