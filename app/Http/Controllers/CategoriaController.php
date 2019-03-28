@@ -17,17 +17,19 @@ class CategoriaController extends Controller
         //if(!$request->ajax())return redirect('/');
         //return DB::table('categorias')->paginate(2); //si se borra no es necesario use Illuminate\Support\Facades\DB;
         //return Categoria::paginate(2);
-        $categoria=Categoria::paginate(2);
-        return[
-            'pagination'=>[
-                'total'     =>$categoria->total(),
-                'current_page'     =>$categoria->currentPage(),
-                'per_page'     =>$categoria->perPage(),
-                'last_Page'     =>$categoria->lastPage(),
-                'from'     =>$categoria->firstItem(),
-                'to'     =>$categoria->lastItem(),
+        if (!$request->ajax()) return redirect('/');
+        $categorias = Categoria::paginate(2);
+ 
+        return [
+            'pagination' => [
+                'total'        => $categorias->total(),
+                'current_page' => $categorias->currentPage(),
+                'per_page'     => $categorias->perPage(),
+                'last_page'    => $categorias->lastPage(),
+                'from'         => $categorias->firstItem(),
+                'to'           => $categorias->lastItem(),
             ],
-            'categorias' => $categoria
+            'categorias' => $categorias
         ];
     }
 

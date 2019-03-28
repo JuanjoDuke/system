@@ -159,7 +159,7 @@
                 offset:3
             }
         },
-        components:{
+        computed:{
           isActived: function(){
                 return this.pagination.current_page;
             },
@@ -188,21 +188,23 @@
             }
         },
         methods: {
-            listarCategoria(page){
+            listarCategoria (page){
                 let me=this;
-                var url='/categoria?page=' + page;
+                var url= '/categoria?page=' + page;
                 axios.get(url).then(function (response) {
-                    var respuesta=response.data;
-                    me.arrayCategoria=respuesta.categorias.data;
-                     me.pagination=respuesta.pagination;
+                    var respuesta= response.data;
+                    me.arrayCategoria = respuesta.categorias.data;
+                    me.pagination= respuesta.pagination;
                 })
                 .catch(function (error) {
-                console.log(error);
-               })
+                    console.log(error);
+                });
             },
             cambiarPagina(page){
-                let me=this;
-                me.pagination.current_page=page;
+                let me = this;
+                //Actualiza la página actual
+                me.pagination.current_page = page;
+                //Envia la petición para visualizar la data de esa página
                 me.listarCategoria(page);
             },
             registrarCategoria(){
