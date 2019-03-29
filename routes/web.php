@@ -21,3 +21,7 @@ Route :: put('/categoria/actualizar','CategoriaController@update');
 //Route :: put('/categoria/desactivar','CategoriaController@desactivar');
 //Route :: put('/categoria/activar','CategoriaController@activar');
 Route :: put('/categoria/cambiarCondicion','CategoriaController@cambiarCondicion');
+Route :: get('/articulo','ArticuloController@index');
+Route :: post('/articulo/registrar','ArticuloController@store');
+Route :: put('/articulo/actualizar','ArticuloController@update');
+Route :: put('/articulo/cambiarCondicion','ArticuloController@cambiarCondicion');
