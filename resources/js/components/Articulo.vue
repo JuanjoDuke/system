@@ -46,12 +46,12 @@
                                           <i class="icon-pencil"></i>
                                         </button> &nbsp;
                                         <template v-if="articulo.condicion">
-                                            <button type="button" class="btn btn-danger btn-sm" @click="desactivarCategoria(articulo.id)">
+                                            <button type="button" class="btn btn-danger btn-sm" @click="desactivarArticulo(articulo.id)">
                                                 <i class="icon-trash"></i>
                                             </button>
                                         </template>
                                         <template v-else>
-                                            <button type="button" class="btn btn-info btn-sm" @click="activarCategoria(articulo.id)">
+                                            <button type="button" class="btn btn-info btn-sm" @click="activarArticulo(articulo.id)">
                                                 <i class="icon-check"></i>
                                             </button>
                                         </template>
@@ -302,83 +302,81 @@
                     console.log(error);
                 }); 
             },
-            desactivarCategoria(id){
-               swal({
-                title: 'Esta seguro de desactivar esta categoría?',
+            desactivarArticulo(id){
+                const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false,
+                })
+
+                swalWithBootstrapButtons.fire({
+                title: '¿Estas seguro de desactivar el articulo?',
                 type: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Aceptar!',
-                cancelButtonText: 'Cancelar',
-                confirmButtonClass: 'btn btn-success',
-                cancelButtonClass: 'btn btn-danger',
-                buttonsStyling: false,
+                confirmButtonText: 'Si',
+                cancelButtonText: 'No',
                 reverseButtons: true
                 }).then((result) => {
                 if (result.value) {
-                    let me = this;
-
-                    axios.put('/categoria/desactivar',{
-                        'id': id
-                    }).then(function (response) {
-                        me.listarCategoria(1,'','nombre');
-                        swal(
-                        'Desactivado!',
-                        'El registro ha sido desactivado con éxito.',
-                        'success'
-                        )
-                    }).catch(function (error) {
-                        console.log(error);
-                    });
-                    
-                    
+                            let me=this;
+                            axios.put('/articulo/cambiarCondicion',{
+                                'id':id
+                            }).then(function (response) {
+                            me.listarArticulo(1,'','nombre');
+                             swalWithBootstrapButtons.fire(
+                              'Desactivado!',
+                                 )
+                            })
+                            .catch(function (error) {
+                            console.log(error);
+                        })
+                   
                 } else if (
                     // Read more about handling dismissals
-                    result.dismiss === swal.DismissReason.cancel
+                    result.dismiss === Swal.DismissReason.cancel
                 ) {
-                    
                 }
-                }) 
+                })
             },
-            activarCategoria(id){
-               swal({
-                title: 'Esta seguro de activar esta categoría?',
+            activarArticulo(id){
+              const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false,
+                })
+
+                swalWithBootstrapButtons.fire({
+                title: '¿Estas seguro de activar el articulo?',
                 type: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Aceptar!',
-                cancelButtonText: 'Cancelar',
-                confirmButtonClass: 'btn btn-success',
-                cancelButtonClass: 'btn btn-danger',
-                buttonsStyling: false,
+                confirmButtonText: 'Si',
+                cancelButtonText: 'No',
                 reverseButtons: true
                 }).then((result) => {
                 if (result.value) {
-                    let me = this;
-
-                    axios.put('/categoria/activar',{
-                        'id': id
-                    }).then(function (response) {
-                        me.listarCategoria(1,'','nombre');
-                        swal(
-                        'Activado!',
-                        'El registro ha sido activado con éxito.',
-                        'success'
-                        )
-                    }).catch(function (error) {
-                        console.log(error);
-                    });
-                    
-                    
+                            let me=this;
+                            axios.put('/articulo/cambiarCondicion',{
+                                'id':id
+                            }).then(function (response) {
+                            me.listarArticulo(1,'','nombre');
+                             swalWithBootstrapButtons.fire(
+                              'Activado!',
+                                 )
+                            })
+                            .catch(function (error) {
+                            console.log(error);
+                        })
+                   
                 } else if (
                     // Read more about handling dismissals
-                    result.dismiss === swal.DismissReason.cancel
+                    result.dismiss === Swal.DismissReason.cancel
                 ) {
-                    
                 }
-                }) 
+                })
             },
             validarArticulo(){
                 this.errorArticulo=0;

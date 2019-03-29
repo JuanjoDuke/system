@@ -70,9 +70,9 @@ class ArticuloController extends Controller
     public function cambiarCondicion(Request $request)
     {
         if(!$request->ajax())return redirect('/');
-        $categoria=Categoria::findOrFail($request->id);
-        $categoria->condicion = !$categoria->condicion;
-        $categoria->save();
+        $articulo = Articulo::findOrFail($request->id);
+        $articulo->condicion = !$articulo->condicion;
+        $articulo->save();
     }
 
 
