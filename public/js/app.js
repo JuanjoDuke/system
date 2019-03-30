@@ -3875,61 +3875,65 @@ __webpack_require__.r(__webpack_exports__);
     desactivarUsuario: function desactivarUsuario(id) {
       var _this = this;
 
-      swal({
-        title: 'Esta seguro de desactivar este usuario?',
+      var swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+      });
+      swalWithBootstrapButtons.fire({
+        title: '¿Estas seguro de desactivar el usuario?',
         type: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Aceptar!',
-        cancelButtonText: 'Cancelar',
-        confirmButtonClass: 'btn btn-success',
-        cancelButtonClass: 'btn btn-danger',
-        buttonsStyling: false,
+        confirmButtonText: 'Si',
+        cancelButtonText: 'No',
         reverseButtons: true
       }).then(function (result) {
         if (result.value) {
           var me = _this;
-          axios.put('/user/desactivar', {
+          axios.put('/user/desactivarActivar', {
             'id': id
           }).then(function (response) {
             me.listarPersona(1, '', 'nombre');
-            swal('Desactivado!', 'El registro ha sido desactivado con éxito.', 'success');
+            swalWithBootstrapButtons.fire('Desactivado!');
           }).catch(function (error) {
             console.log(error);
           });
         } else if ( // Read more about handling dismissals
-        result.dismiss === swal.DismissReason.cancel) {}
+        result.dismiss === Swal.DismissReason.cancel) {}
       });
     },
     activarUsuario: function activarUsuario(id) {
       var _this2 = this;
 
-      swal({
-        title: 'Esta seguro de activar este usuario?',
+      var swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+      });
+      swalWithBootstrapButtons.fire({
+        title: '¿Estas seguro de activar el usuario?',
         type: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Aceptar!',
-        cancelButtonText: 'Cancelar',
-        confirmButtonClass: 'btn btn-success',
-        cancelButtonClass: 'btn btn-danger',
-        buttonsStyling: false,
+        confirmButtonText: 'Si',
+        cancelButtonText: 'No',
         reverseButtons: true
       }).then(function (result) {
         if (result.value) {
           var me = _this2;
-          axios.put('/user/activar', {
+          axios.put('/user/desactivarActivar', {
             'id': id
           }).then(function (response) {
             me.listarPersona(1, '', 'nombre');
-            swal('Activado!', 'El registro ha sido activado con éxito.', 'success');
+            swalWithBootstrapButtons.fire('Activado!');
           }).catch(function (error) {
             console.log(error);
           });
         } else if ( // Read more about handling dismissals
-        result.dismiss === swal.DismissReason.cancel) {}
+        result.dismiss === Swal.DismissReason.cancel) {}
       });
     }
   },
