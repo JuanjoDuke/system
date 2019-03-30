@@ -160,7 +160,7 @@
                 direccion : '',
                 telefono : '',
                 email : '',
-                arrayPersona : [],
+                 arrayPersona : [],
                 modal : 0,
                 tituloModal : '',
                 tipoAccion : 0,
