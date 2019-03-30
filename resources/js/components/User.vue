@@ -343,6 +343,7 @@
 
                 if (this.errorMostrarMsjPersona.length) this.errorPersona = 1;
 
+
                 return this.errorPersona;
             },
             cerrarModal(){
