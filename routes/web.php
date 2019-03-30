@@ -27,3 +27,7 @@ Route :: get('/articulo','ArticuloController@index');
 Route :: post('/articulo/registrar','ArticuloController@store');
 Route :: put('/articulo/actualizar','ArticuloController@update');
 Route :: put('/articulo/cambiarCondicion','ArticuloController@cambiarCondicion');
+
+Route::get('/cliente', 'ClienteController@index');
+Route::post('/cliente/registrar', 'ClienteController@store');
+Route::put('/cliente/actualizar', 'ClienteController@update');
