@@ -15,7 +15,7 @@ class LoginController extends Controller
     public function login(Request $request){
         $this->validateLogin($request);        
  
-        if (Auth::attempt(['usuario' => $request->usuario,'password' => $request->password])){
+        if (Auth::attempt(['usuario' => $request->usuario,'password' => $request->password,'condicion'=>1])){
             return redirect()->route('main');
         }
  
@@ -30,6 +30,12 @@ class LoginController extends Controller
             'usuario' => 'required|string',
             'password' => 'required|string'
         ]);
+ 
     }
  
+    public function logout(Request $request){
+        Auth::logout();
+        $request->session()->invalidate();
+        return redirect('/');
+    }
 }

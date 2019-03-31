@@ -70,6 +70,20 @@
     </header>
 
     <div class="app-body">
+
+        @if(Auth::check())
+            @if (Auth::user()->idrol == 1)
+                @include('plantilla.sidebaradministrador')
+            @elseif (Auth::user()->idrol == 2)
+                @include('plantilla.sidebarvendedor')
+            @elseif (Auth::user()->idrol == 3)
+                @include('plantilla.sidebaralmacenero')
+            @else
+ 
+            @endif
+ 
+        @endif
+
         @include('template.sidebar')
 
         <!-- Contenido Principal -->
