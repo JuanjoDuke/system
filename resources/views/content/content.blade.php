@@ -13,7 +13,7 @@
                 <articulo-component></articulo-component>
             </template>
             <template v-if="menu==3">
-                <h1>Ingresos</h1>
+              <ingreso-component></ingreso-component>
             </template>
             <template v-if="menu==4">
             <proveedor-component></proveedor-component>
@@ -66,7 +66,7 @@
                 <articulo-component></articulo-component>
             </template>
             <template v-if="menu==3">
-                <h1>Ingresos</h1>
+                 <ingreso-component></ingreso-component>
             </template>
             <template v-if="menu==4">
             <proveedor-component></proveedor-component>
