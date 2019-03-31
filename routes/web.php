@@ -14,8 +14,12 @@ Route::group(['middleware'=>['guest']],function(){
     Route::get('/','Auth\LoginController@showLoginForm');
     Route::post('/login', 'Auth\LoginController@login')->name('login');
 });
+ 
+
 Route::group(['middleware'=>['auth']],function(){
     
+    Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+
     Route::get('/main', function () {
         return view('content/content');
     })->name('main');
@@ -50,8 +54,6 @@ Route::group(['middleware'=>['auth']],function(){
         Route :: get('/categoria','CategoriaController@index');
         Route :: post('/categoria/registrar','CategoriaController@store');
         Route :: put('/categoria/actualizar','CategoriaController@update');
-        //Route :: put('/categoria/desactivar','CategoriaController@desactivar');
-        //Route :: put('/categoria/activar','CategoriaController@activar');
         Route :: put('/categoria/cambiarCondicion','CategoriaController@cambiarCondicion');
         Route :: get('/categoria/selectCategoria','CategoriaController@selectCategoria');
 
