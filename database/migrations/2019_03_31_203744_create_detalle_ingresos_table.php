@@ -19,7 +19,7 @@ class CreateDetalleIngresosTable extends Migration
             $table->foreign('idingreso')->references('id')->on('ingresos')->onDelete('cascade');
             $table->integer('idarticulo')->unsigned();
             $table->foreign('idarticulo')->references('id')->on('articulos');
-            $table->integer('cantidad');
+            $table->integer('caad');
             $table->decimal('precio', 11, 2);
         });
     }
