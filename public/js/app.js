@@ -3547,7 +3547,7 @@ __webpack_require__.r(__webpack_exports__);
         buttonsStyling: false
       });
       swalWithBootstrapButtons.fire({
-        title: 'Esta seguro de anular este ingreso?',
+        title: 'Esta seguro de anular este ingreso ?',
         type: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Si',

@@ -615,7 +615,7 @@
                 buttonsStyling: false,
                 })
                 swalWithBootstrapButtons.fire({
-                title: 'Esta seguro de anular este ingreso?',
+                title: 'Esta seguro de anular este ingreso ?',
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Si',
