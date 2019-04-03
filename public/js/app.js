@@ -5483,34 +5483,40 @@ __webpack_require__.r(__webpack_exports__);
       this.modal = 1;
       this.tituloModal = 'Seleccione uno o varios artículos';
     },
-    desactivarIngreso: function desactivarIngreso(id) {
+    desactivarVenta: function desactivarVenta(id) {
       var _this = this;
 
-      swal({
-        title: 'Esta seguro de anular este ingreso?',
+      var swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+      });
+      swalWithBootstrapButtons.fire({
+        title: 'Esta seguro de anular esta venta ?',
         type: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Aceptar!',
-        cancelButtonText: 'Cancelar',
-        confirmButtonClass: 'btn btn-success',
-        cancelButtonClass: 'btn btn-danger',
-        buttonsStyling: false,
+        confirmButtonText: 'Si',
+        cancelButtonText: 'No',
         reverseButtons: true
       }).then(function (result) {
         if (result.value) {
           var me = _this;
-          axios.put('/ingreso/desactivar', {
+          axios.put('/venta/desactivar', {
             'id': id
           }).then(function (response) {
-            me.listarIngreso(1, '', 'num_comprobante');
-            swal('Anulado!', 'El ingreso ha sido anulado con éxito.', 'success');
+            me.listarVenta(1, '', 'num_comprobante');
+            Swal.fire({
+              type: 'Desactivado!',
+              title: 'La venta se ha anulado',
+              text: ''
+            });
           }).catch(function (error) {
             console.log(error);
           });
         } else if ( // Read more about handling dismissals
-        result.dismiss === swal.DismissReason.cancel) {}
+        result.dismiss === Swal.DismissReason.cancel) {}
       });
     }
   },

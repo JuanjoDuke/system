@@ -774,44 +774,44 @@
                 this.modal = 1;
                 this.tituloModal = 'Seleccione uno o varios artículos';
             },
-            desactivarIngreso(id){
-               swal({
-                title: 'Esta seguro de anular este ingreso?',
+            desactivarVenta(id){
+                const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false,
+                })
+                swalWithBootstrapButtons.fire({
+                title: 'Esta seguro de anular esta venta ?',
                 type: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Aceptar!',
-                cancelButtonText: 'Cancelar',
-                confirmButtonClass: 'btn btn-success',
-                cancelButtonClass: 'btn btn-danger',
-                buttonsStyling: false,
+                confirmButtonText: 'Si',
+                cancelButtonText: 'No',
                 reverseButtons: true
                 }).then((result) => {
                 if (result.value) {
-                    let me = this;
+                           let me = this;
 
-                    axios.put('/ingreso/desactivar',{
-                        'id': id
-                    }).then(function (response) {
-                        me.listarIngreso(1,'','num_comprobante');
-                        swal(
-                        'Anulado!',
-                        'El ingreso ha sido anulado con éxito.',
-                        'success'
-                        )
-                    }).catch(function (error) {
-                        console.log(error);
-                    });
-                    
-                    
+                            axios.put('/venta/desactivar',{
+                                'id': id
+                            }).then(function (response) {
+                                me.listarVenta(1,'','num_comprobante');
+                               Swal.fire({
+                                type: 'Desactivado!',
+                                title: 'La venta se ha anulado',
+                                text: '',
+                            
+                              })
+                            }).catch(function (error) {
+                                console.log(error);
+                            });
                 } else if (
                     // Read more about handling dismissals
-                    result.dismiss === swal.DismissReason.cancel
+                    result.dismiss === Swal.DismissReason.cancel
                 ) {
-                    
                 }
-                }) 
+                })
             },
         },
         mounted() {
