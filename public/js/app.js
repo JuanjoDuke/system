@@ -5141,6 +5141,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -5258,10 +5261,10 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
-    getDatosProveedor: function getDatosProveedor(val1) {
+    getDatosCliente: function getDatosCliente(val1) {
       var me = this;
       me.loading = true;
-      me.idproveedor = val1.id;
+      me.idcliente = val1.id;
     },
     buscarArticulo: function buscarArticulo() {
       var me = this;
@@ -5373,14 +5376,14 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
-    registrarIngreso: function registrarIngreso() {
-      if (this.validarIngreso()) {
+    registrarVenta: function registrarVenta() {
+      if (this.validarVenta()) {
         return;
       }
 
       var me = this;
-      axios.post('/ingreso/registrar', {
-        'idproveedor': this.idproveedor,
+      axios.post('/venta/registrar', {
+        'idcliente': this.idcliente,
         'tipo_comprobante': this.tipo_comprobante,
         'serie_comprobante': this.serie_comprobante,
         'num_comprobante': this.num_comprobante,
@@ -5389,8 +5392,8 @@ __webpack_require__.r(__webpack_exports__);
         'data': this.arrayDetalle
       }).then(function (response) {
         me.listado = 1;
-        me.listarIngreso(1, '', 'num_comprobante');
-        me.idproveedor = 0;
+        me.listarVenta(1, '', 'num_comprobante');
+        me.idcliente = 0;
         me.tipo_comprobante = 'BOLETA';
         me.serie_comprobante = '';
         me.num_comprobante = '';
@@ -5400,21 +5403,32 @@ __webpack_require__.r(__webpack_exports__);
         me.articulo = '';
         me.cantidad = 0;
         me.precio = 0;
+        me.stock = 0;
+        me.codigo = '';
+        me.descuento = 0;
         me.arrayDetalle = [];
       }).catch(function (error) {
         console.log(error);
       });
     },
-    validarIngreso: function validarIngreso() {
-      this.errorIngreso = 0;
-      this.errorMostrarMsjIngreso = [];
-      if (this.idproveedor == 0) this.errorMostrarMsjIngreso.push("Seleccione un Proveedor");
-      if (this.tipo_comprobante == 0) this.errorMostrarMsjIngreso.push("Seleccione el comprobante");
-      if (!this.num_comprobante) this.errorMostrarMsjIngreso.push("Ingrese el número de comprobante");
-      if (!this.impuesto) this.errorMostrarMsjIngreso.push("Ingrese el impuesto de compra");
-      if (this.arrayDetalle.length <= 0) this.errorMostrarMsjIngreso.push("Ingrese detalles");
-      if (this.errorMostrarMsjIngreso.length) this.errorIngreso = 1;
-      return this.errorIngreso;
+    validarVenta: function validarVenta() {
+      var me = this;
+      me.errorVenta = 0;
+      me.errorMostrarMsjVenta = [];
+      var art;
+      me.arrayDetalle.map(function (x) {
+        if (x.cantidad > x.stock) {
+          art = x.articulo + " con stock insuficiente";
+          me.errorMostrarMsjVenta.push(art);
+        }
+      });
+      if (me.idcliente == 0) me.errorMostrarMsjVenta.push("Seleccione un Cliente");
+      if (me.tipo_comprobante == 0) me.errorMostrarMsjVenta.push("Seleccione el comprobante");
+      if (!me.num_comprobante) me.errorMostrarMsjVenta.push("Ingrese el número de comprobante");
+      if (!me.impuesto) me.errorMostrarMsjVenta.push("Ingrese el impuesto de compra");
+      if (me.arrayDetalle.length <= 0) me.errorMostrarMsjVenta.push("Ingrese detalles");
+      if (me.errorMostrarMsjVenta.length) me.errorVenta = 1;
+      return me.errorVenta;
     },
     mostrarDetalle: function mostrarDetalle() {
       var me = this;
@@ -5434,26 +5448,24 @@ __webpack_require__.r(__webpack_exports__);
     ocultarDetalle: function ocultarDetalle() {
       this.listado = 1;
     },
-    verIngreso: function verIngreso(id) {
+    verVenta: function verVenta(id) {
       var me = this;
-      me.listado = 2; //Obtener los datos del ingreso
-
-      var arrayIngresoT = [];
-      var url = '/ingreso/obtenerCabecera?id=' + id;
+      me.listado = 2;
+      var arrayVentaT = [];
+      var url = '/venta/obtenerCabecera?id=' + id;
       axios.get(url).then(function (response) {
         var respuesta = response.data;
-        arrayIngresoT = respuesta.ingreso;
-        me.proveedor = arrayIngresoT[0]['nombre'];
-        me.tipo_comprobante = arrayIngresoT[0]['tipo_comprobante'];
-        me.serie_comprobante = arrayIngresoT[0]['serie_comprobante'];
-        me.num_comprobante = arrayIngresoT[0]['num_comprobante'];
-        me.impuesto = arrayIngresoT[0]['impuesto'];
-        me.total = arrayIngresoT[0]['total'];
+        arrayVentaT = respuesta.venta;
+        me.cliente = arrayVentaT[0]['nombre'];
+        me.tipo_comprobante = arrayVentaT[0]['tipo_comprobante'];
+        me.serie_comprobante = arrayVentaT[0]['serie_comprobante'];
+        me.num_comprobante = arrayVentaT[0]['num_comprobante'];
+        me.impuesto = arrayVentaT[0]['impuesto'];
+        me.total = arrayVentaT[0]['total'];
       }).catch(function (error) {
         console.log(error);
-      }); //Obtener los datos de los detalles 
-
-      var urld = '/ingreso/obtenerDetalles?id=' + id;
+      });
+      var urld = '/venta/obtenerDetalles?id=' + id;
       axios.get(urld).then(function (response) {
         console.log(response);
         var respuesta = response.data;
@@ -52238,11 +52250,11 @@ var render = function() {
                     _c("div", { staticClass: "col-md-9" }, [
                       _c("div", { staticClass: "form-group" }, [
                         _c("label", { attrs: { for: "" } }, [
-                          _vm._v("Proveedor")
+                          _vm._v("Cliente")
                         ]),
                         _vm._v(" "),
                         _c("p", {
-                          domProps: { textContent: _vm._s(_vm.proveedor) }
+                          domProps: { textContent: _vm._s(_vm.cliente) }
                         })
                       ])
                     ]),
@@ -52325,11 +52337,19 @@ var render = function() {
                                         }
                                       }),
                                       _vm._v(" "),
+                                      _c("td", {
+                                        domProps: {
+                                          textContent: _vm._s(detalle.descuento)
+                                        }
+                                      }),
+                                      _vm._v(" "),
                                       _c("td", [
                                         _vm._v(
                                           "\n                                        " +
                                             _vm._s(
-                                              detalle.precio * detalle.cantidad
+                                              detalle.precio *
+                                                detalle.cantidad -
+                                                detalle.descuento
                                             ) +
                                             "\n                                    "
                                         )
@@ -52829,6 +52849,8 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Cantidad")]),
         _vm._v(" "),
+        _c("th", [_vm._v("Descuento")]),
+        _vm._v(" "),
         _c("th", [_vm._v("Subtotal")])
       ])
     ])
@@ -52837,7 +52859,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", { attrs: { colspan: "3", align: "right" } }, [
+    return _c("td", { attrs: { colspan: "4", align: "right" } }, [
       _c("strong", [_vm._v("Total Parcial:")])
     ])
   },
@@ -52845,7 +52867,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", { attrs: { colspan: "3", align: "right" } }, [
+    return _c("td", { attrs: { colspan: "4", align: "right" } }, [
       _c("strong", [_vm._v("Total Impuesto:")])
     ])
   },
@@ -52853,7 +52875,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", { attrs: { colspan: "3", align: "right" } }, [
+    return _c("td", { attrs: { colspan: "4", align: "right" } }, [
       _c("strong", [_vm._v("Total Neto:")])
     ])
   },
@@ -52862,7 +52884,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("td", { attrs: { colspan: "4" } }, [
+      _c("td", { attrs: { colspan: "5" } }, [
         _vm._v(
           "\n                                        NO hay artículos agregados\n                                    "
         )
