@@ -508,15 +508,15 @@
                     console.log(error);
                 });
             },
-            selectProveedor(search,loading){
+            selectCliente(search,loading){
                 let me=this;
                 loading(true)
 
-                var url= '/proveedor/selectProveedor?filtro='+search;
+                var url= '/cliente/selectCliente?filtro='+search;
                 axios.get(url).then(function (response) {
                     let respuesta = response.data;
                     q: search
-                    me.arrayProveedor=respuesta.proveedores;
+                    me.arrayCliente=respuesta.clientes;
                     loading(false)
                 })
                 .catch(function (error) {
