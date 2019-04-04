@@ -4,7 +4,7 @@
         @if(Auth::check())
             @if (Auth::user()->idrol == 1)
             <template v-if="menu==0">
-            <h1>Escritorio</h1>
+            <dash-component></dash-component>
             </template>
             <template v-if="menu==1">
                 <categoria-component></categoria-component>
@@ -31,10 +31,10 @@
                 <rol-component></rol-component>
             </template>
             <template v-if="menu==9">
-                <h1>Reporte de ingresos</h1>
+                <consultaingreso-component></consultaingreso-component>
             </template>
             <template v-if="menu==10">
-                <h1>Reporte de ventas</h1>
+                <consultaventa-component></consultaventa-component>
             </template>
             <template v-if="menu==11">
                 <h1>Ayuda</h1>
@@ -43,6 +43,9 @@
                 <h1>Acerca de </h1>
             </template>
             @elseif (Auth::user()->idrol == 2)
+            <template v-if="menu==0">
+            <dash-component></dash-component>
+            </template>
             <template v-if="menu==5">
                 <venta-component></venta-component>
             </template>
@@ -50,7 +53,7 @@
             <cliente-component></cliente-component>
             </template>
             <template v-if="menu==10">
-                <h1>Reporte de ventas</h1>
+            <consultaventa-component></consultaventa-component>
             </template>
             <template v-if="menu==11">
                 <h1>Ayuda</h1>
@@ -59,6 +62,9 @@
                 <h1>Acerca de </h1>
             </template>
             @elseif (Auth::user()->idrol == 3)
+            <template v-if="menu==0">
+            <dash-component></dash-component>
+            </template>
             <template v-if="menu==1">
                 <categoria-component></categoria-component>
             </template>
@@ -72,7 +78,7 @@
             <proveedor-component></proveedor-component>
             </template>
             <template v-if="menu==9">
-                <h1>Reporte de ingresos</h1>
+                <consultaingreso-component></consultaingreso-component>
             </template>
             <template v-if="menu==11">
                 <h1>Ayuda</h1>
