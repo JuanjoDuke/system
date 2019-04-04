@@ -31,10 +31,10 @@
                 <rol-component></rol-component>
             </template>
             <template v-if="menu==9">
-                <h1>Reporte de ingresos</h1>
+                <consultaingreso-component></consultaingreso-component>
             </template>
             <template v-if="menu==10">
-                <h1>Reporte de ventas</h1>
+                <consultaventa-component></consultaventa-component>
             </template>
             <template v-if="menu==11">
                 <h1>Ayuda</h1>
@@ -53,7 +53,7 @@
             <cliente-component></cliente-component>
             </template>
             <template v-if="menu==10">
-                <h1>Reporte de ventas</h1>
+            <consultaventa-component></consultaventa-component>
             </template>
             <template v-if="menu==11">
                 <h1>Ayuda</h1>
@@ -78,7 +78,7 @@
             <proveedor-component></proveedor-component>
             </template>
             <template v-if="menu==9">
-                <h1>Reporte de ingresos</h1>
+                <consultaingreso-component></consultaingreso-component>
             </template>
             <template v-if="menu==11">
                 <h1>Ayuda</h1>
