@@ -7,6 +7,7 @@
 
 require('./bootstrap');
 
+window.$=window.JQuery=require('jquery');
 window.Vue = require('vue');
 
 /**
@@ -31,6 +32,7 @@ Vue.component('venta-component', require('./components/Venta.vue').default);
 Vue.component('dash-component', require('./components/Dashboard.vue').default);
 Vue.component('consultaingreso-component', require('./components/ConsultaIngreso.vue').default);
 Vue.component('consultaventa-component', require('./components/ConsultaVenta.vue').default);
+Vue.component('notification-component', require('./components/Notification.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -40,6 +42,25 @@ Vue.component('consultaventa-component', require('./components/ConsultaVenta.vue
 const app = new Vue({
     el: '#app',
     data:{
-        menu:0
+        menu:0,
+        notifications:[]
+    },
+    created(){
+        let me=this;
+        axios.post('notification/get').then(function(response){
+            me.notifications=response.data;
+            //console.log(response.data);
+        }).catch(function (error) {
+            console.log(error);
+        });
+
+        var userId=$('meta[name="userId"]').attr('content');
+
+        Echo.private('App.User.' + userId).notification((notification)=>{
+           me.notifications.unshift(notification);
+            //console.log(notification);
+        });
+    
     }
+    
 });
